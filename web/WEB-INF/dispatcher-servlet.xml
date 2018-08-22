@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!--<context:component-scan base-package="controller"/>-->
     <!-- 配置处理映射器 -->
     <!-- 根据请求的name进行匹配，匹配bean中的name属性，匹配到对应的Controller-->
     <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
@@ -24,14 +26,17 @@
     <!--
         在Spring3.1版本之前，系统默认加载DispatchServlet.properties文件中的org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping
         在3.1版本之后，要使用org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping这个注解映射器
+        这种在写Handler的时候要是用@Controller进行声明为一个Handler，然后要使用@RequestMapping进行相关url匹配
+        不添加<mvc:annotation-driven/>这个语句时，@Controller不能生效
     -->
+    <mvc:annotation-driven/>
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
-
 
     <!-- id主要是为了SimpleUrlHandlerMapping进行匹配
         name主要是为了匹配BeanNameUrlHandlerMapping匹配到相关的Handler-->
     <bean id="itemController" name="/itemList.action" class="controller.ItemController"/>
     <bean id="itemController1" class="controller.ItemController1"/>
+    <bean class="controller.ItemController2"/>
 
     <!-- 配置处理适配器 -->
     <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
