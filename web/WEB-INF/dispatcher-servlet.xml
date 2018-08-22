@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置处理映射器 -->
+    <!-- 根据请求的name进行匹配，匹配bean中的name属性，匹配到对应的Controller-->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+    <!-- 另外一种不同的映射器-->
+    <!-- 根据请求的URl进行匹配映射-->
+    <!--
+        key:请求的相关URL
+        标签内容：配置的bean的id，根据匹配id查找到对应的Handler
+    -->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/itemList.action">itemController</prop>
+                <prop key="/itemList1.action">itemController1</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 第三种映射器，这种是注解映射器 -->
+    <!--
+        在Spring3.1版本之前，系统默认加载DispatchServlet.properties文件中的org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping
+        在3.1版本之后，要使用org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping这个注解映射器
+    -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+
+
+    <!-- id主要是为了SimpleUrlHandlerMapping进行匹配
+        name主要是为了匹配BeanNameUrlHandlerMapping匹配到相关的Handler-->
+    <bean id="itemController" name="/itemList.action" class="controller.ItemController"/>
+    <bean id="itemController1" class="controller.ItemController1"/>
+
+    <!-- 配置处理适配器 -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+    <!-- 另外一种适配器-->
+    <!-- 这个适配器适配的Handler需要实现HttpRequest接口-->
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
+
+    <!-- 配置视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
+
+
+</beans>
