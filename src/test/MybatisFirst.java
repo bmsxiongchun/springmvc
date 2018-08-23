@@ -1,5 +1,6 @@
 import dao.UserDao;
 import dao.impl.UserDaoImpl;
+import mapper.OrdersMapperCustom;
 import mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -7,9 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import pojo.User;
-import pojo.UserCustom;
-import pojo.UserQueryVo;
+import pojo.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -235,7 +234,27 @@ public class MybatisFirst {
         sqlSession.close();
 
         System.out.println(users);
+    }
 
+    @Test
+    public void findOrderUserList() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
 
+        OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
+        List<OrderCustom> orderUserList = mapper.findOrderUserList();
+        sqlSession.close();
+        System.out.println(orderUserList);
+    }
+
+    @Test
+    public void findOrderUserListResultMap() throws Exception {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
+
+        List<Orders> orderUserListResultMap = mapper.findOrderUserListResultMap();
+        sqlSession.close();
+        System.out.println(orderUserListResultMap);
     }
 }
