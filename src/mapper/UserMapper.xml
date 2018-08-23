@@ -49,17 +49,78 @@
     <update id="updateUser" parameterType="pojo.User">
         UPDATE USER SET username=#{username}, birthday=#{birthday}, sex=#{sex}, address=#{address} WHERE id=#{id}
     </update>
+    
+    <!-- 自定义sql片段 -->
+    <sql id="query_user_where">
+        <if test="userCustom != null">
+            <if test="userCustom.username != null and userCustom.username != ''">
+                and username like "%${userCustom.username}"
+            </if>
+
+            <if test="userCustom.sex != null and userCustom.sex != ''">
+                and sex = #{userCustom.sex}
+            </if>
+
+            <!-- 还有很多的查询条件 -->
+            <!-- 根据id集合查询用户信息 -->
+            <!--
+                最终拼接的效果
+                select id,username,birthday from user where username like '%codingXiaxw%' and id in (1,2)
+                collection: 集合的属性
+                open：开始循环要拼接的串
+                close：结束循环要拼接的串
+                item：每次循环渠道的对象
+                separator:每两次循环中间拼接的串
+            -->
+            <foreach collection="ids" open="and id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </sql>
 
     <!-- 自定义查询条件查询用户信息 -->
     <select id="findUserList" parameterType="userQueryVo" resultType="user">
-        SELECT * FROM USER WHERE username LIKE "%${userCustom.username}"
+        SELECT id, username, birthday FROM USER
+--         WHERE username LIKE "%${userCustom.username}"
+        <!-- 相当于where关键字， 自动去除第一个and-->
+        <where>
+
+            <!-- 如果userQueryVo中传入查询条件，再进行sql拼接-->
+            <!--<if test="userCustom != null">-->
+                <!--<if test="userCustom.username != null and userCustom.user != ''">-->
+                    <!--and username like "%${userCustom.username}"-->
+                <!--</if>-->
+
+                <!--<if test="userCustom.sex != null and userCustom.sex != ''">-->
+                    <!--and sex = #{userCustom.sex}-->
+                <!--</if>-->
+
+                <!--&lt;!&ndash;还可以添加很多条件&ndash;&gt;-->
+            <!--</if>-->
+
+            <!-- 使用定义的SQL片段 -->
+            <include refid="query_user_where"/>
+        </where>
     </select>
 
     <!-- 输出简单类型
         自定义查询条件，返回查询记录个数，通常用于实现查询分页
     -->
     <select id="findUserCount" parameterType="userQueryVo" resultType="int">
-        SELECT COUNT(*) FROM USER WHERE username like "%${userCustom.username}"
+        SELECT COUNT(*) FROM USER
+--         WHERE username like "%${userCustom.username}"
+        <where>
+            <!--<if test="userCustom != null">-->
+                <!--<if test="userCustom.username != null and userCustom.username != ''">-->
+                    <!--and username like "%${userCustom.username}"-->
+                <!--</if>-->
+
+                <!--<if test="userCustom.sex != null and userCustom.sex != ''">-->
+                    <!--and sex = #{userCustom.sex}-->
+                <!--</if>-->
+            <!--</if>-->
+            <include refid="query_user_where"/>
+        </where>
     </select>
     
     <!-- 使用resultMap进行映射 -->

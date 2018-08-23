@@ -13,6 +13,7 @@ import pojo.UserQueryVo;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -209,5 +210,32 @@ public class MybatisFirst {
         List<User> userListResultMap = mapper.findUserListResultMap(userQueryVo);
         sqlSession.close();
         System.out.println(userListResultMap);
+    }
+
+    @Test
+    public void findUserByList() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        UserQueryVo userQueryVo = new UserQueryVo();
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        userQueryVo.setIds(list);
+
+        UserCustom userCustom = new UserCustom();
+        userCustom.setUsername("xiong");
+        userCustom.setSex("female");
+        userQueryVo.setUserCustom(userCustom);
+        List<User> users = mapper.findUserList(userQueryVo);
+
+        sqlSession.close();
+
+        System.out.println(users);
+
+
     }
 }
