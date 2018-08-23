@@ -1,5 +1,6 @@
 import dao.UserDao;
 import dao.impl.UserDaoImpl;
+import mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -32,15 +33,26 @@ public class MybatisFirst {
     public void testFindUserById() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        User user = null;
+//        User user = null;
+//        try {
+//            user = sqlSession.selectOne("test.findUserById", 1);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            sqlSession.close();
+//        }
+//        System.out.println(user);
+
+        //使用Mybatis的Mapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
         try {
-            user = sqlSession.selectOne("test.findUserById", 1);
+            User user = mapper.findUserById(2);
+            System.out.println(user);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sqlSession.close();
         }
-        System.out.println(user);
+
 
     }
 
@@ -48,21 +60,30 @@ public class MybatisFirst {
     public void findUserByName() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        List<User> list = null;
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         try {
-            list = sqlSession.selectList("test.findUserByName", "xiong");
+            List<User> userList = mapper.findUserByName("xiong");
+            System.out.println(userList.get(0).getUsername());
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sqlSession.close();
         }
 
-        System.out.println(list.get(0).getUsername());
+//        List<User> list = null;
+//
+//        try {
+//            list = sqlSession.selectList("test.findUserByName", "xiong");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            sqlSession.close();
+//        }
+
+//        System.out.println(list.get(0).getUsername());
     }
 
     @Test
-    public void insertUser() {
+    public void insertUser() throws Exception {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         User user = new User();
@@ -70,27 +91,37 @@ public class MybatisFirst {
         user.setAddress("hubei");
         user.setBirthday(new Date());
         user.setSex("woman");
-        try {
-            sqlSession.insert("test.insertUser", user);
-            sqlSession.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            sqlSession.close();
-        }
+//        try {
+//            sqlSession.insert("test.insertUser", user);
+//            sqlSession.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            sqlSession.close();
+//        }
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        mapper.insertUser(user);
     }
 
     @Test
     public void deleteUser() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
+//        try {
+//            sqlSession.delete("test.deleteUser", 9);
+//            sqlSession.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            sqlSession.close();
+//        }
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         try {
-            sqlSession.delete("test.deleteUser", 9);
-            sqlSession.commit();
+            mapper.deleteUser(8);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sqlSession.close();
         }
     }
 
@@ -105,13 +136,19 @@ public class MybatisFirst {
         user.setSex("man");
         user.setId(8);
 
+//        try {
+//            sqlSession.update("test.updateUser", user);
+//            sqlSession.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            sqlSession.close();
+//        }
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         try {
-            sqlSession.update("test.updateUser", user);
-            sqlSession.commit();
+            mapper.updateUser(user);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sqlSession.close();
         }
     }
 

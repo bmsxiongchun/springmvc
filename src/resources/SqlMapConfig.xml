@@ -18,6 +18,7 @@
 
     <!-- 注册mapper文件-->
     <mappers>
+        <mapper resource="User.xml"/>
         <mapper resource="UserMapper.xml"/>
     </mappers>
 

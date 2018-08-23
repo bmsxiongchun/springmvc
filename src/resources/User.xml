@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="mapper.UserMapper">
+<mapper namespace="test">
     <!--
         在mapper.xml文件中配置很多的SQL查询语句，执行每个sql语句时，都会被封装成MappedStatement对象，
         mapper.xml以statement为单位管理sql语句
