@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test">
+    <!--
+        在mapper.xml文件中配置很多的SQL查询语句，执行每个sql语句时，都会被封装成MappedStatement对象，
+        mapper.xml以statement为单位管理sql语句
+    -->
+    <!--
+        根据id查询用户信息
+        id：标识statement的唯一标识
+        #{}：标识一个占位符，如果#{}中传入简单类型的参数，#{}中的名称随意
+        parameterType：输入参数的类型
+        resultType：输出结果的类型，不管返回是多条还是单条，指定单条记录映射的pojo类型
+    -->
+    <select id="findUserById" parameterType="int" resultType="pojo.User">
+        SELECT * FROM USER WHERE id=#{id}
+    </select>
+
+    <!-- 根据用户名查询信息， 可能返回多条
+        ${}: 表示sql的拼接，通过${} 接收参数，将参数的内容不加任何修饰拼接在sql中
+    -->
+    <select id="findUserByName" parameterType="java.lang.String" resultType="pojo.User">
+        SELECT * FROM USER WHERE username LIKE "%${value}%"
+    </select>
+
+    <!-- 添加用户
+        parameterType: 输入的类型，User对象包括username, birthday, sex, address
+        #{} 接受pojo数据，可以使用OGNL解析出pojo的属性值
+        #{username} 表示从paramerType中获取pojo的属性值
+        selectKey：用于主键返回，定义了获取主键值的sql
+        order：设置selectKey中sql的执行顺序，相对于insert来说
+        keyProperty：将主键设置为那个属性
+        resultType：select LAST_INSERT_ID()的结果类型
+    -->
+    <insert id="insertUser" parameterType="pojo.User">
+        <!-- order表示在insert之后执行 -->
+      <selectKey keyProperty="id" order="AFTER" resultType="int">
+          SELECT LAST_INSERT_ID()
+      </selectKey>
+        INSERT INTO USER VALUE (#{id}, #{username}, #{birthday}, #{sex}, #{address})
+    </insert>
+
+    <!-- 删除用户 -->
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM USER WHERE id=#{id}
+    </delete>
+
+    <!-- 更新表中的信息 -->
+    <update id="updateUser" parameterType="pojo.User">
+        UPDATE USER SET username=#{username}, birthday=#{birthday}, sex=#{sex}, address=#{address} WHERE id=#{id}
+    </update>
+</mapper>
