@@ -1,6 +1,7 @@
 package mapper;
 
 import pojo.User;
+import pojo.UserQueryVo;
 
 import java.util.List;
 
@@ -18,4 +19,10 @@ public interface UserMapper {
     public void deleteUser(int id) throws Exception;
 
     public void updateUser(User user) throws Exception;
+
+    public List<User> findUserList(UserQueryVo userQueryVo) throws Exception;
+
+    public int findUserCount(UserQueryVo userQueryVo) throws Exception;
+
+    public List<User> findUserListResultMap(UserQueryVo userQueryVo) throws Exception;
 }

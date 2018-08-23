@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import pojo.User;
+import pojo.UserCustom;
+import pojo.UserQueryVo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +32,7 @@ public class MybatisFirst {
     }
 
     @Test
-    public void testFindUserById() {
+    public void FindUserById() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
 //        User user = null;
@@ -158,5 +160,54 @@ public class MybatisFirst {
 
         User user = userDao.findUserById(1);
         System.out.println(user);
+    }
+
+    @Test
+    public void findUserList() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        UserQueryVo userQueryVo = new UserQueryVo();
+        UserCustom userCustom = new UserCustom();
+        userCustom.setUsername("xiong");
+        userQueryVo.setUserCustom(userCustom);
+
+        List<User> user = mapper.findUserList(userQueryVo);
+        sqlSession.close();
+
+        System.out.println(user);
+    }
+
+    @Test
+    public void findUserCount() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        UserQueryVo userQueryVo = new UserQueryVo();
+
+        UserCustom userCustom = new UserCustom();
+
+        userCustom.setUsername("xiong");
+        userQueryVo.setUserCustom(userCustom);
+        int count = mapper.findUserCount(userQueryVo);
+        sqlSession.close();
+        System.out.println(count);
+    }
+
+    @Test
+    public void findUserListResultMap() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        UserQueryVo userQueryVo = new UserQueryVo();
+        UserCustom userCustom = new UserCustom();
+
+        userCustom.setUsername("xiong");
+        userQueryVo.setUserCustom(userCustom);
+        List<User> userListResultMap = mapper.findUserListResultMap(userQueryVo);
+        sqlSession.close();
+        System.out.println(userListResultMap);
     }
 }

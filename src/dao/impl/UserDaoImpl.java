@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
     public User findUserById(int id) throws Exception {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        User user = sqlSession.selectOne("test.findUserById", id);
+        User user = sqlSession.selectOne("mapper.UserMapper.findUserById", id);
         sqlSession.close();
         return user;
     }
@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> findUserByName(String username) throws Exception {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        List<User> list = sqlSession.selectList("test.findUserByName", "xiong");
+        List<User> list = sqlSession.selectList("mapper.UserMapper.findUserByName", "xiong");
         sqlSession.close();
         return list;
     }
