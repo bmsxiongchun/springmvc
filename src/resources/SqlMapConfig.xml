@@ -7,6 +7,14 @@
     <!-- 加载properties -->
     <properties resource="db.properties"/>
 
+    <!-- 全局设置 -->
+    <settings>
+        <!-- 设置按需加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 延迟加载总开关 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+
     <typeAliases>
         <typeAlias type="pojo.User" alias="user"/>
 

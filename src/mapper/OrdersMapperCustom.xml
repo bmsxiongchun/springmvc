@@ -28,6 +28,26 @@
             <result column="sex" property="sex"/>
         </association>
     </resultMap>
+    
+    <!-- 一对一延迟加载-->
+    <resultMap id="orderCustomLazyLoading" type="orders">
+        <!-- 完成订单信息的映射配置 -->
+        <!-- id：订单关联用户查询的唯一配置 -->
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="number" property="number"/>
+        <result column="vote" property="note"/>
+        <result column="createtime" property="createtime"/>
+
+        <!--
+            配置用户信息的延迟加载
+            select: 延迟加载执行的sql所在的statement的id，如果不在同一个namespace需要加namespace
+            sql： 根据用户的id查询用户信息
+            column：关联查询的列
+            property：将关联查询的用户信息设置到Order的哪个属性
+        -->
+        <association property="user" select="mapper.UserMapper.findUserById" column="user_id"/>
+    </resultMap>
 
     <!-- 一对多，查询订单及订单明细 -->
     <resultMap id="orderAndOrderDetailResultMap" type="orders" extends="ordersUserResultMap">
@@ -51,6 +71,12 @@
 
     <select id="findOrderUserListResultMap" resultMap="ordersUserResultMap">
         select orders.*, user.username, user.sex from orders, user where orders.user_id=user.id
+    </select>
+
+    <!-- 一对一延迟加载 -->
+    <!-- 一开始只查询订单，对用户信息进行延迟加载 -->
+    <select id="findOrderUserListLazyLoading" resultMap="orderCustomLazyLoading">
+        select orders.* from orders
     </select>
 
     <select id="findOrderUserList" resultType="pojo.OrderCustom">
