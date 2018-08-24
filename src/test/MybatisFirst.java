@@ -289,4 +289,54 @@ public class MybatisFirst {
         sqlSession.close();
         System.out.println(user);
     }
+
+
+    @Test
+    public void cacheTest() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        //第一次查询id为1的用户信息
+        User user1 = mapper.findUserById(1);
+        System.out.println(user1);
+
+        //加入更新的操作
+//        user1.setSex("female");
+//        user1.setAddress("hubeisheng");
+//        mapper.updateUser(user1);
+
+        //第二次查询id为1的用户信息
+        User user2 = mapper.findUserById(1);
+        System.out.println(user2);
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void cacheTest2() throws Exception {
+        SqlSession sqlSession1 = sqlSessionFactory.openSession();
+        SqlSession sqlSession2 = sqlSessionFactory.openSession();
+        SqlSession sqlSession3 = sqlSessionFactory.openSession();
+
+        UserMapper mapper1 = sqlSession1.getMapper(UserMapper.class);
+        UserMapper mapper2 = sqlSession2.getMapper(UserMapper.class);
+        UserMapper mapper3 = sqlSession3.getMapper(UserMapper.class);
+
+        //第一次查询用户id为1的用户
+        User user = mapper1.findUserById(1);
+        System.out.println(user);
+        sqlSession1.close();
+
+        // 中间修改用户清空缓存，目的防止脏数据
+        user.setUsername("hello");
+        mapper3.updateUser(user);
+        sqlSession3.commit();
+        sqlSession3.close();
+
+        // 第二次查询用户id为1的用户
+        User user1 = mapper2.findUserById(1);
+        System.out.println(user1);
+        sqlSession2.close();
+    }
 }

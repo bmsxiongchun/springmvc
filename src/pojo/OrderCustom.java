@@ -2,7 +2,9 @@ package pojo;
 
 import pojo.Orders;
 
-public class OrderCustom extends Orders {
+import java.io.Serializable;
+
+public class OrderCustom extends Orders implements Serializable {
 
     private String username;
     private String sex;
