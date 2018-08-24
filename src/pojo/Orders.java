@@ -1,6 +1,7 @@
 package pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Orders {
 
@@ -8,7 +9,18 @@ public class Orders {
     private Integer userId;
     private String number;
     private Date createtime;
-    private String vote;
+    private String note;
+    private User user;
+
+    public List<Orderdetail> getOrderdetails() {
+        return orderdetails;
+    }
+
+    public void setOrderdetails(List<Orderdetail> orderdetails) {
+        this.orderdetails = orderdetails;
+    }
+
+    private List<Orderdetail> orderdetails;
 
     public User getUser() {
         return user;
@@ -17,8 +29,6 @@ public class Orders {
     public void setUser(User user) {
         this.user = user;
     }
-
-    private User user;
 
     public Integer getId() {
         return id;
@@ -45,12 +55,12 @@ public class Orders {
         this.createtime = createtime;
     }
 
-    public String getVote() {
-        return vote;
+    public String getNote() {
+        return note;
     }
 
-    public void setVote(String vote) {
-        this.vote = vote;
+    public void setNote(String vote) {
+        this.note = vote;
     }
 
     public Integer getUserId() {

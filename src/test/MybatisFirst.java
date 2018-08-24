@@ -171,6 +171,11 @@ public class MybatisFirst {
         UserQueryVo userQueryVo = new UserQueryVo();
         UserCustom userCustom = new UserCustom();
         userCustom.setUsername("xiong");
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        userQueryVo.setIds(list);
         userQueryVo.setUserCustom(userCustom);
 
         List<User> user = mapper.findUserList(userQueryVo);
@@ -189,6 +194,11 @@ public class MybatisFirst {
         UserCustom userCustom = new UserCustom();
 
         userCustom.setUsername("xiong");
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        userQueryVo.setIds(list);
         userQueryVo.setUserCustom(userCustom);
         int count = mapper.findUserCount(userQueryVo);
         sqlSession.close();
@@ -256,5 +266,16 @@ public class MybatisFirst {
         List<Orders> orderUserListResultMap = mapper.findOrderUserListResultMap();
         sqlSession.close();
         System.out.println(orderUserListResultMap);
+    }
+
+    @Test
+    public void findOrderAndOrderDetails() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
+        List<Orders> orderAndOrderDetails = mapper.findOrderAndOrderDetails();
+        sqlSession.close();
+        System.out.println(orderAndOrderDetails);
+
     }
 }
