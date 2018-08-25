@@ -1,35 +1,17 @@
 package pojo;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-public class Orders implements Serializable {
-
+public class Orders {
     private Integer id;
+
     private Integer userId;
-    private String number;
+
+    private Integer number;
+
     private Date createtime;
+
     private String note;
-    private User user;
-
-    public List<Orderdetail> getOrderdetails() {
-        return orderdetails;
-    }
-
-    public void setOrderdetails(List<Orderdetail> orderdetails) {
-        this.orderdetails = orderdetails;
-    }
-
-    private List<Orderdetail> orderdetails;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Integer getId() {
         return id;
@@ -39,12 +21,19 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
 
-    public String getNumber() {
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -60,15 +49,7 @@ public class Orders implements Serializable {
         return note;
     }
 
-    public void setNote(String vote) {
-        this.note = vote;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
     }
 }

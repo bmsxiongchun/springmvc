@@ -156,8 +156,8 @@ public class MybatisFirst {
 
     @Test
     public void findById() throws Exception {
-        UserDao userDao = new UserDaoImpl(sqlSessionFactory);
-
+//        UserDao userDao = new UserDaoImpl(sqlSessionFactory);
+        UserDao userDao = new UserDaoImpl();
         User user = userDao.findUserById(1);
         System.out.println(user);
     }

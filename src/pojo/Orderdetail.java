@@ -1,41 +1,43 @@
 package pojo;
 
 public class Orderdetail {
+    private Integer id;
 
-    private int id;
-    private int ordersId;
-    private int itemsId;
-    private int itemsNum;
+    private Integer ordersId;
 
-    public int getId() {
+    private Integer itemsId;
+
+    private Integer itemsNum;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getOrdersId() {
+    public Integer getOrdersId() {
         return ordersId;
     }
 
-    public void setOrdersId(int ordersId) {
+    public void setOrdersId(Integer ordersId) {
         this.ordersId = ordersId;
     }
 
-    public int getItemsId() {
+    public Integer getItemsId() {
         return itemsId;
     }
 
-    public void setItemsId(int itemsId) {
+    public void setItemsId(Integer itemsId) {
         this.itemsId = itemsId;
     }
 
-    public int getItemsNum() {
+    public Integer getItemsNum() {
         return itemsNum;
     }
 
-    public void setItemsNum(int itemsNum) {
+    public void setItemsNum(Integer itemsNum) {
         this.itemsNum = itemsNum;
     }
 }

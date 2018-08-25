@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--1、加载数据库配置文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!--1、配置数据库连接池-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxIdle" value="5"/>
+    </bean>
+
+    <!-- 配置dao -->
+    <bean id="userDao" class="dao.impl.UserDaoImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <!-- 3.配置SqlsessionFactory，引入的是mybatis和sqlsession整合包下的SqlSessionFactoryBean类 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--下面才是mybatis和spring整合的重要步骤，
+            1、注入数据源
+        -->
+        <property name="dataSource" ref="dataSource"/>
+        <!--
+            2、mybatis全局配置文件
+        -->
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"/>
+    </bean>
+
+
+    <!--
+        4、配置mapper
+        MapperFactoryBean, 用于生成mapper代理对象
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 配置扫描包的路径， 如果要扫描多个包，中间用半角逗号分隔，要求Mapper.java和Mapper.xml在同一目录下-->
+        <property name="basePackage" value="mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!-- 整合开发mapper的代理方法 -->
+    <!-- 方法一： 使用MapperFactoryBean -->
+    <!--<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+        <!--<property name="mapperInterface" value="mapper.UserMapper"/>-->
+        <!--<property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+    <!--</bean>-->
+
+    <!-- 第二种方法：使用MapperScannerConfigurer-->
+    <!-- 使用扫描配置某个包下的所有mapper -->
+    <!-- MapperScannerConfigurer:mapper的扫描器，将包下面的mapper的接口自动创建代理对象，自动创建到IOC容器中
+        bean的id是mapper的类名，首字母小写
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 配置需要扫描的包，如果有多个中间用半角逗号分隔-->
+        <property name="basePackage" value="mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+</beans>
