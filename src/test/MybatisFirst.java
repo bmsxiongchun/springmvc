@@ -279,16 +279,16 @@ public class MybatisFirst {
 
     }
 
-    @Test
-    public void findOrderUserListLazyLoading() throws Exception {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
-        List<Orders> orderUserListLazyLoading = mapper.findOrderUserListLazyLoading();
-        User user = orderUserListLazyLoading.get(0).getUser();
-        sqlSession.close();
-        System.out.println(user);
-    }
+//    @Test
+//    public void findOrderUserListLazyLoading() throws Exception {
+//        SqlSession sqlSession = sqlSessionFactory.openSession();
+//
+//        OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
+//        List<Orders> orderUserListLazyLoading = mapper.findOrderUserListLazyLoading();
+//        User user = orderUserListLazyLoading.get(0).getUser();
+//        sqlSession.close();
+//        System.out.println(user);
+//    }
 
 
     @Test
