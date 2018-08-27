@@ -53,11 +53,11 @@
     </typeAliases>
 
     <!-- 注册mapper文件-->
-    <mappers>
-        <mapper resource="resources/User.xml"/>
-        <package name="mapper"/>
-        <!--<mapper resource="User.xml"/>-->
-        <!--<mapper resource="mapper.UserMapper.xml"/>-->
-    </mappers>
+    <!--<mappers>-->
+        <!--<mapper resource="resources/User.xml"/>-->
+        <!--<package name="mapper"/>-->
+        <!--&lt;!&ndash;<mapper resource="User.xml"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<mapper resource="mapper.UserMapper.xml"/>&ndash;&gt;-->
+    <!--</mappers>-->
 
 </configuration>
