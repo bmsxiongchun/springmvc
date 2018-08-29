@@ -2,7 +2,6 @@ package po;
 
 public class ItemsQueryVo {
 
-    //商品信息
     private ItemsCustom itemsCustom;
 
     public ItemsCustom getItemsCustom() {

@@ -172,16 +172,16 @@
       address = #{address,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
     <delete id="deleteByExample" parameterType="po.UserExample" >
         delete from user
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
     <select id="countByExample" parameterType="po.UserExample" resultType="java.lang.Integer" >
         select count(*) from user
         <if test="_parameter != null" >
@@ -208,5 +208,4 @@
         from user
         where id = #{id,jdbcType=INTEGER}
     </select>
-
 </mapper>

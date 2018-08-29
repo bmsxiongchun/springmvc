@@ -1,4 +1,4 @@
 package po;
 
-public class ItemsCustom extends Items {
+public class ItemsCustom {
 }
