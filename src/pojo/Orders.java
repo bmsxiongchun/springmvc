@@ -7,7 +7,7 @@ public class Orders {
 
     private Integer userId;
 
-    private Integer number;
+    private String number;
 
     private Date createtime;
 
@@ -29,12 +29,12 @@ public class Orders {
         this.userId = userId;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setNumber(String number) {
+        this.number = number == null ? null : number.trim();
     }
 
     public Date getCreatetime() {

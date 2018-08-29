@@ -19,7 +19,7 @@
         设置了这两个属性值后我们在controller中进行代码开发时返回的modelAndView对象设置的页面路径值就不用带前缀名和后缀名了
     -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 

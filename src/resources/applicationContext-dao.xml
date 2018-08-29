@@ -29,7 +29,7 @@
      -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 配置扫描包的路径，如果要扫描多个包的话，中间使用半角逗号分割，要求mapper和mapper.xml在同一文件夹 -->
-        <property name="basePackage" value="mapper"/>
+        <property name="basePackage" value="mappers"/>
         <!--使用sqlSessionFactoryBeanName -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>

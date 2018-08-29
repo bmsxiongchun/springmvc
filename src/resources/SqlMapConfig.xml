@@ -49,7 +49,7 @@
 
     <!-- mybati与spring结合 -->
     <typeAliases>
-        <package name="pojo"/>
+        <package name="po"/>
     </typeAliases>
 
     <!-- 注册mapper文件-->

@@ -3,4 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- 另外一种配置Service的方式 -->
+    <bean id="itemsService" class="service.impl.ItemsServiceImpl"/>
+
 </beans>

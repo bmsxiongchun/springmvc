@@ -6,11 +6,9 @@ import pojo.Orderdetail;
 import pojo.OrderdetailExample;
 
 public interface OrderdetailMapper {
-    long countByExample(OrderdetailExample example);
+    int countByExample(OrderdetailExample example);
 
     int deleteByExample(OrderdetailExample example);
-
-    int deleteByPrimaryKey(Integer id);
 
     int insert(Orderdetail record);
 
@@ -18,13 +16,7 @@ public interface OrderdetailMapper {
 
     List<Orderdetail> selectByExample(OrderdetailExample example);
 
-    Orderdetail selectByPrimaryKey(Integer id);
-
     int updateByExampleSelective(@Param("record") Orderdetail record, @Param("example") OrderdetailExample example);
 
     int updateByExample(@Param("record") Orderdetail record, @Param("example") OrderdetailExample example);
-
-    int updateByPrimaryKeySelective(Orderdetail record);
-
-    int updateByPrimaryKey(Orderdetail record);
 }
