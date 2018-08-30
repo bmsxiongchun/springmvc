@@ -5,21 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import po.ItemsCustom;
 import po.ItemsQueryVo;
 import service.ItemsService;
+import utils.ValidGroup1;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/items")
@@ -40,6 +41,15 @@ public class ItemsController {
 //        //Date.class必须是与controller方法形参pojo属性一致的date类型
 //        webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH-mm-ss"), true));
 //    }
+
+    @ModelAttribute("itemsType")
+    public Map<String, String> getItemsType() {
+        HashMap<String, String> itemsType = new HashMap<>();
+        itemsType.put("001", "data type");
+        itemsType.put("002", "cloths");
+
+        return itemsType;
+    }
 
     @RequestMapping("/queryItems")
     public ModelAndView queryItems() throws Exception {
@@ -83,7 +93,28 @@ public class ItemsController {
     }
 
     @RequestMapping(value = "/editItemSubmit", method = RequestMethod.POST)
-    public String editItemSubmit(Integer id, ItemsCustom itemsCustom) throws Exception {
+    public String editItemSubmit(Model model, Integer id, @Validated(value = {ValidGroup1.class}) @ModelAttribute(value = "itemsCustom") ItemsCustom itemsCustom, BindingResult bindingResult, MultipartFile pictureFile) throws Exception {
+
+        //进行数据回显
+        model.addAttribute("id", id);
+//        model.addAttribute("item", itemsCustom);
+
+        //上传图片
+        if (pictureFile != null && pictureFile.getOriginalFilename() != null && pictureFile.getOriginalFilename().length() > 0) {
+            //图片上传成功之后将地址上传至数据库
+            String filePath = "C:\\Users\\bonree\\Pictures";
+            String originalFilename = pictureFile.getOriginalFilename();
+
+            String newFileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+
+            //新文件
+            File file = new File(filePath + newFileName);
+
+            //将内存中的文件存入磁盘
+            pictureFile.transferTo(file);
+
+            itemsCustom.setPic(newFileName);
+        }
 
         itemsService.updateItems(id, itemsCustom);
         /**
@@ -93,7 +124,7 @@ public class ItemsController {
         /**
          * 使用redirect进行请求重定向，request数据不会共享，url地址栏会发生变化
          */
-        return "redirect:queryItems.action";
+        return "editItem";
     }
 
 //    @RequestMapping(value = "/editItemSubmit", method = RequestMethod.POST)
@@ -109,4 +140,29 @@ public class ItemsController {
 //         */
 //        return "redirect:queryItems.action";
 //    }
+
+    @RequestMapping("/deleteItems")
+    public String deleteItems(Integer[] delete_id) throws Exception {
+        itemsService.deleteItemsById(delete_id);
+        return "success";
+    }
+
+    //批量修改商品
+    @RequestMapping("/editItemsList")
+    public ModelAndView editItemList() throws Exception {
+        //调用service查询商品信息
+        List<ItemsCustom> itemsList = itemsService.findItemsList(null);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("itemsList", itemsList);
+        modelAndView.setViewName("editItemsList");
+
+        return modelAndView;
+    }
+
+    //批量修改商品的提交
+    @RequestMapping("/editItemsListSubmit")
+    public String editItemsListSubmit(ItemsQueryVo itemsQueryVo) {
+        return "success";
+    }
 }

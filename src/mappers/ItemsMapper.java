@@ -12,6 +12,8 @@ public interface ItemsMapper {
 
     int deleteByPrimaryKey(Integer id);
 
+    int deleteByIds(Integer[] ids);
+
     int insert(Items record);
 
     int insertSelective(Items record);

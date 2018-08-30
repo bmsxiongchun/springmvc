@@ -38,4 +38,9 @@ public class ItemsServiceImpl implements ItemsService {
         ItemsCustom itemsCustom = itemsCustomMapper.findItemById(id);
         return itemsCustom;
     }
+
+    @Override
+    public void deleteItemsById(Integer[] delete_id) throws Exception {
+        itemsMapper.deleteByIds(delete_id);
+    }
 }

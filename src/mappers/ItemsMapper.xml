@@ -123,6 +123,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <delete id="deleteByIds">
+      set FOREIGN_KEY_CHECKS = 0;
+      delete from items where id in
+      <foreach collection="array" item="itemId" open="(" separator="," close=")">
+        #{itemId}
+      </foreach>
+      and id not in (select items_id from orderdetail);
+      set FOREIGN_KEY_CHECKS = 1;
+  </delete>
   <insert id="insert" parameterType="po.Items">
     insert into items (id, name, price, 
       pic, createtime, detail

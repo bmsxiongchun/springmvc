@@ -21,4 +21,7 @@ public interface ItemsService {
 
     //根据id查找商品
     public ItemsCustom findItemsById(Integer id) throws Exception;
+
+    //根据id删除商品
+    public void deleteItemsById(Integer[] delete_id) throws Exception;
 }
