@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mappers.ItemsCustomMapper">
     <select id="findItemsList" parameterType="po.ItemsQueryVo" resultType="po.ItemsCustom">
-        select * from items
+        select id, name, detail, pic, price, createtime from items
+    </select>
+    <select id="findItemById" parameterType="Integer" resultType="po.ItemsCustom">
+        select * from items where id = #{id}
     </select>
 </mapper>
