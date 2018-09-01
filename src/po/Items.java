@@ -1,16 +1,22 @@
 package po;
 
+import utils.ValidGroup1;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class Items {
     private Integer id;
 
+    @Size(min = 1, max = 30, message = "{items.name.length.error}")
     private String name;
 
     private Float price;
 
     private String pic;
 
+    @NotNull(message = "{items.createtime.is.notnull}", groups = {ValidGroup1.class})
     private Date createtime;
 
     private String detail;

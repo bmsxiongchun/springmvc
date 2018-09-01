@@ -6,6 +6,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -94,6 +95,22 @@ public class ItemsController {
 
     @RequestMapping(value = "/editItemSubmit", method = RequestMethod.POST)
     public String editItemSubmit(Model model, Integer id, @Validated(value = {ValidGroup1.class}) @ModelAttribute(value = "itemsCustom") ItemsCustom itemsCustom, BindingResult bindingResult, MultipartFile pictureFile) throws Exception {
+
+        //输出校验错误信息
+        //如果参数绑定时出单
+        if (bindingResult.hasErrors()) {
+            //获取错误
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+
+            model.addAttribute("errors", allErrors);
+
+            for (ObjectError error : allErrors) {
+                System.out.println(error.getDefaultMessage());
+            }
+
+            //如果校验错误，仍然返回到修改信息页面
+            return "editItem";
+        }
 
         //进行数据回显
         model.addAttribute("id", id);

@@ -16,6 +16,10 @@
     <title>修改商品信息</title>
 </head>
 <body>
+<!-- 错误信息 -->
+<c:forEach items="${errors}" var="error">
+    <div color="red">${error.defaultMessage}<br></div>
+</c:forEach>
 <form id="itemForm" action="${pageContext.request.contextPath }/items/editItemSubmit.action" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="${id }"/>
     修改商品信息：
@@ -29,16 +33,8 @@
             <td><input type="text" name="price" value="${itemsCustom.price }"/></td>
         </tr>
         <tr>
-            <td>商品简介</td>
-            <td>
-                <textarea rows="3" cols="30" name="detail">${itemsCustom.detail }</textarea>
-            </td>
-        </tr>
-        <tr>
             <td>商品生产日期</td>
-            <td>
-                <input type="text" name="createtime" value="<fmt:formatDate value="${itemsCustom.createtime}" pattern="yyyy-MM-dd HH-mm-ss"/>"/>
-            </td>
+            <td><input type="text" name="createtime" value="<fmt:formatDate value="${itemsCustom.createtime}" pattern="yyyy-MM-dd HH-mm-ss"/>"/></td>
         </tr>
         <tr>
             <td>商品图片</td>
@@ -48,6 +44,12 @@
                     <br/>
                 </c:if>
                 <input type="file" name="pictureFile">
+            </td>
+        </tr>
+        <tr>
+            <td>商品简介</td>
+            <td>
+                <textarea rows="3" cols="30" name="detail">${itemsCustom.detail }</textarea>
             </td>
         </tr>
         <tr>
