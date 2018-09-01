@@ -182,4 +182,14 @@ public class ItemsController {
     public String editItemsListSubmit(ItemsQueryVo itemsQueryVo) {
         return "success";
     }
+
+    //更具商品id查看商品信息rest接口
+    //@requestMapping中指定restful方式的url中的参数，参数需要用{}包起来
+    //@PathVariable将url中的参数和形参进行绑定
+    @RequestMapping("/viewItems/{id}")
+    public @ResponseBody ItemsCustom viewItems(@PathVariable("id") Integer id) throws Exception {
+        //调用service查询商品信息
+        ItemsCustom itemsCustom = itemsService.findItemsById(id);
+        return itemsCustom;
+    }
 }

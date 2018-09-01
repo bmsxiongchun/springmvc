@@ -94,7 +94,22 @@
     </bean>
 
     <!--<mvc:default-servlet-handler />-->
-    <!--<mvc:resources mapping="/js/**.js" location="/js/"/>-->
+    <mvc:resources mapping="/js/**" location="/js/"/>
+
+    <mvc:interceptors>
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<bean class="controller.interceptor.HandlerInterceptor1"/>-->
+        <!--</mvc:interceptor>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<bean class="controller.interceptor.HandlerInterceptor2"/>-->
+        <!--</mvc:interceptor>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="controller.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
