@@ -8,6 +8,9 @@
     <!-- 使用spring组件扫描 一次性配置此包下所有的handler -->
     <context:component-scan base-package="controller"/>
 
+    <!-- 定义统一异常处理器 -->
+    <bean class="utils.CustomExceptionResolver"/>
+
     <!--<mvc:annotation-driven>-->
         <!--<mvc:message-converters>-->
             <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
