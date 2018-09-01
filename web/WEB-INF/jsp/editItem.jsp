@@ -14,7 +14,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>修改商品信息</title>
-
 </head>
 <body>
 <form id="itemForm" action="${pageContext.request.contextPath }/items/editItemSubmit.action" method="post" enctype="multipart/form-data">
@@ -37,15 +36,17 @@
         </tr>
         <tr>
             <td>商品生产日期</td>
-            <td><input type="text" name="createtime" value="<fmt:formatDate value="${itemsCustom.createtime}" pattern="yyyy-MM-dd HH-mm-ss"/>"/></td>
+            <td>
+                <input type="text" name="createtime" value="<fmt:formatDate value="${itemsCustom.createtime}" pattern="yyyy-MM-dd HH-mm-ss"/>"/>
+            </td>
         </tr>
         <tr>
             <td>商品图片</td>
             <td>
-            <c:if test="${itemsCustom.pic}!=null">
-                <img src="/pic/${itemsCustom.pic}" width="100" height="100">
-                <br/>
-            </c:if>
+                <c:if test="${itemsCustom.pic}!=null">
+                    <img src="/pic/${itemsCustom.pic}" width="100" height="100">
+                    <br/>
+                </c:if>
                 <input type="file" name="pictureFile">
             </td>
         </tr>
