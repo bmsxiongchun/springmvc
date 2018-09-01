@@ -8,6 +8,12 @@
     <!-- 使用spring组件扫描 一次性配置此包下所有的handler -->
     <context:component-scan base-package="controller"/>
 
+    <!--<mvc:annotation-driven>-->
+        <!--<mvc:message-converters>-->
+            <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
+        <!--</mvc:message-converters>-->
+    <!--</mvc:annotation-driven>-->
+
     <!-- mvc的注解驱动器， 通过他可以代替下边的处理器映射器和适配器 -->
     <!--<mvc:annotation-driven conversion-service="conversionService"/>-->
 
@@ -27,7 +33,26 @@
     <!-- 注解的适配器 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="webBindingInitializer" ref="customBinder"/>
+         <!--加入json数据的消息转换器 MappingJacksonHttpMessageConverter依赖两个包 -->
+        <property name="messageConverters">
+            <list>
+                <ref bean="mappingJacksonHttpMessageConverter"/>
+            </list>
+        </property>
     </bean>
+
+    <!-- Json转换 -->
+    <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=utf-8</value>
+                <value>application/x-www-form-urlencoded</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+
 
     <!-- 配置视图解析器 要求将jstl的包加到classpath
         prefix:代表请求的url的前缀
@@ -47,7 +72,26 @@
                 <!--<ref bean="customPropertyEditor"/>-->
             <!--</list>-->
         <!--</property>-->
+        <property name="validator" ref="validator"/>
     </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>CustomValidationMessages</value>
+            </list>
+        </property>
+        <property name="fileEncodings" value="utf-8"/>
+        <property name="cacheSeconds" value="120"/>
+    </bean>
+
+    <!--<mvc:default-servlet-handler />-->
+    <!--<mvc:resources mapping="/js/**.js" location="/js/"/>-->
 
     <!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
