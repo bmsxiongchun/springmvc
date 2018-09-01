@@ -124,13 +124,14 @@
     </if>
   </delete>
   <delete id="deleteByIds">
-      set FOREIGN_KEY_CHECKS = 0;
-      delete from items where id in
-      <foreach collection="array" item="itemId" open="(" separator="," close=")">
+      delete from orderdetail where items_id in
+      <foreach collection="array" item="itemId" open="(" separator="," close=");">
         #{itemId}
       </foreach>
-      and id not in (select items_id from orderdetail);
-      set FOREIGN_KEY_CHECKS = 1;
+      delete from items where id in
+      <foreach collection="array" item="itemId" open="(" separator="," close=");">
+        #{itemId}
+      </foreach>
   </delete>
   <insert id="insert" parameterType="po.Items">
     insert into items (id, name, price, 
