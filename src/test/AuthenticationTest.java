@@ -15,7 +15,8 @@ public class AuthenticationTest {
     public void testLoginAndLogout() {
 
         //创建securityManager工厂
-        Factory<SecurityManager> factory=new IniSecurityManagerFactory("classpath:resources/shiro/shiro.ini");
+//        Factory<SecurityManager> factory=new IniSecurityManagerFactory("classpath:resources/shiro/shiro.ini");
+        Factory<SecurityManager> factory=new IniSecurityManagerFactory("classpath:resources/shiro/shiro-realm.ini");
 
         //创建SecurityManager
         SecurityManager securityManager = factory.getInstance();
