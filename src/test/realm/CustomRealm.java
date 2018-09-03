@@ -6,8 +6,12 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomRealm extends AuthorizingRealm {
 
@@ -20,7 +24,23 @@ public class CustomRealm extends AuthorizingRealm {
     //用于授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        //从principals获取主身份信息
+        //将getPrimaryPrincipal方法返回值转为真是身份类型(在上边的goGetAuthenticationInfo认证通过填充到SimpleAuthenticationInfo)
+        String usercode = (String) principalCollection.getPrimaryPrincipal();
+
+        //根据身份信息获取权限信息
+        //模拟从数据库中获取到的动态权限数据
+        List<String> permissions = new ArrayList<>();
+        permissions.add("user:create"); //模拟user的创建权限
+        permissions.add("items:add"); //模拟商品的添加权限
+
+        //查询权限数据，返回授权信息
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+
+        //simpleAuthorizationInfo
+        simpleAuthorizationInfo.addStringPermissions(permissions);
+
+        return simpleAuthorizationInfo;
     }
 
     @Override
