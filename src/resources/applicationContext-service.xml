@@ -6,4 +6,6 @@
     <!-- 另外一种配置Service的方式 -->
     <bean id="itemsService" class="service.impl.ItemsServiceImpl"/>
 
+    <bean id="sysService" class="service.impl.SysServiceImpl"/>
+
 </beans>
