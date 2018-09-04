@@ -55,6 +55,11 @@
         <table tableName="orders"/>
         <table tableName="orderdetail"/>
         <table tableName="user"/>
+        <table tableName="sys_permission"/>
+        <table tableName="sys_role"/>
+        <table tableName="sys_user"/>
+        <table tableName="sys_role_permission"/>
+        <table tableName="sys_user_role"/>
 
         <!-- 有些表的字段需要指定java类型
 		 <table schema="" tableName="">
