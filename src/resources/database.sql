@@ -187,3 +187,23 @@ insert  into `sys_role_permission`(`id`,`sys_role_id`,`sys_permission_id`) value
 insert  into `sys_user`(`id`,`usercode`,`username`,`password`,`salt`,`locked`) values ('lisi','lisi','李四','bf07fd8bbc73b6f70b8319f2ebb87483','uiwueylm','0'),('zhangsan','zhangsan','张三','cb571f7bd7a6f73ab004a70322b963d5','eteokues','0');
 
 insert  into `sys_user_role`(`id`,`sys_user_id`,`sys_role_id`) values ('ebc8a441-c6f9-11e4-b137-0adc305c3f28','zhangsan','ebc8a441-c6f9-11e4-b137-0adc305c'),('ebc9d647-c6f9-11e4-b137-0adc305c3f28','lisi','ebc9d647-c6f9-11e4-b137-0adc305c');
+
+
+create table province(
+  pid int auto_increment not null,
+  pname varchar(50),
+  primary key(pid)
+)engine=InnoDB default charset=utf8 auto_increment=1;
+
+create table city (
+  cid int primary key auto_increment not null,
+  cname varchar(50),
+  pid int
+)engine=InnoDB default charset=utf8 auto_increment=1;
+
+insert into province value (1, 'beijing');
+insert into province values (2, 'tianjin'), (3, 'henan');
+
+insert into city values (1, 'dongchengqu', 1), (2, 'xichengqu', 1), (3, 'heping', 2), (4, 'zhancheng', 2), (5, 'zhenzhou', 3);
+
+select * from province;

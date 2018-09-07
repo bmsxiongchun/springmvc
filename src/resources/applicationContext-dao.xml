@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- 加载配置文件 -->
-    <context:property-placeholder location="classpath:db.properties"/>
+    <context:property-placeholder location="classpath:resources/db.properties"/>
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -21,7 +21,7 @@
         <!-- 数据源 -->
         <property name="dataSource" ref="dataSource"/>
         <!-- mybatis配置文件 -->
-        <property name="configLocation" value="classpath:SqlMapConfig.xml"/>
+        <property name="configLocation" value="classpath:resources/SqlMapConfig.xml"/>
     </bean>
 
     <!--mapperScannerConfigurer: mapper的扫描器， 将包下面的mapper接口自动创建对象
